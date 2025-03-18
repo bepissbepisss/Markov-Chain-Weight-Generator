@@ -27,6 +27,18 @@ void removePunct(string& s) {
 	}
 }
 
+void removeCaps(string& s) {
+	for (int i=0 ; i<s.length(); i++) {
+		s[i]=tolower(s[i]);
+	}	
+}
+
+//remove caps and punctuation
+void cleanWord(string& s) {
+	removePunct(s);
+	removeCaps(s);
+}
+
 bool isSame(string& wordOne, string& wordTwo) {
 	removePunct(wordOne);
 	removePunct(wordTwo);
@@ -44,18 +56,23 @@ bool isSame(string& wordOne, string& wordTwo) {
 	return true;
 }
 
+void writeFirstRow(ofstream& output, vector<string>& wordOrder) {
+	output << ",";
+	for (const string& word : wordOrder) {
+		output << word << ",	";
+	}
+
+}
+
+
 //generates columns of matrix. should ignore case and punctuation
 void generateWordOrder (istream& input, vector<string>& wordOrder) {
 	string tempWord;
 	while (input) {
 		input >> tempWord;
 
-		removePunct(tempWord);
 
-		for (int i=0 ; i<tempWord.length(); i++) {
-			tempWord[i]=tolower(tempWord[i]);
-		}	
-
+		cleanWord(tempWord);
 		//search for tempWord in vector 
 		bool newWord{true};
 		for (int i =0 ; i<wordOrder.size() ; i++ ) {
@@ -65,24 +82,54 @@ void generateWordOrder (istream& input, vector<string>& wordOrder) {
 			}
 		}
 		if (newWord == true) wordOrder.push_back(tempWord);
-
 	}
 }
 
-//generates a matrix row before adding counts to entries 
-vector<int> generateRow(const vector<string>& wordOrder) {
-    vector<int> v(wordOrder.size(), 0);
-    return v;
+//generates a row of the matrix
+vector<int> generateCounts(ifstream& ist, const vector<string>& wordOrder) {
+	vector<int> row(wordOrder.size(),0);
+	for (const string& word : wordOrder) {
+		// use wordOrder and search for word in text 
+	//	ist.seekg(0,std::ios::beg);
+		string tempWord{"dany"};
+
+		cout << "Looking for " << word << endl;
+
+		ist.clear();
+		ist.good();
+		while (ist >> tempWord) {
+			cout << "Got " << tempWord << endl;
+			if (tempWord == word) {
+			string nextWord{""};
+			ist >> nextWord;
+			for (int i=0; i<wordOrder.size(); i++ ) {
+				string column = wordOrder[i];
+				if (nextWord == column) {
+					row[i]++;	
+				}
+			}
+
+			}
+		}
+		ist.good();
+			
+
+
+		
+	
+		// make a new vector of ints that represents the counts of each next word
+		//
+		//look at next word and add one to its entry on the row
+
+
+		// do for all words of wordOrder
+	}
+	return row;
 }
 
+// divide each entry by the sum of the entries
+// output
 
-
-void generateCounts(const vector<string>& wordOrder) {
-    for (const string& word : wordOrder) {
-    	   // search for the word with a separate function for skipping (input.ignore() until word
-	   // add one to count for each next word (i already wrote operator++
-    }
-}
 
 int main () {
 	vector<string> wordOrder;
@@ -94,7 +141,19 @@ int main () {
 	for (int i=0; i<wordOrder.size(); i++) {
 		cout << wordOrder[i] << endl;
 	}
-	
+
+
+	ofstream ost{"matrix.csv"};
+
+	writeFirstRow(ost, wordOrder);
+
+	vector<int> row = generateCounts(ist, wordOrder);
+
+	for(int i : row ) {
+		cout << i << endl;
+	}
+
+
 
 	return 0;
 }
