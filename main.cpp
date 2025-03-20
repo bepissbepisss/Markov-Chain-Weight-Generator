@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 
+#include <algorithm>
+
 #include<cctype> //check if char is letter or number 
 
 using namespace std;
@@ -22,9 +24,9 @@ using namespace std;
 
 
 void removePunct(string& s) {
-	while (!isalnum(s.back())) {
-		s.pop_back();	
-	}
+	s.erase(remove_if(s.begin(), s.end(), [](char c) {
+		return !isalnum(c);
+	}), s.end());
 }
 
 void removeCaps(string& s) {
@@ -35,6 +37,9 @@ void removeCaps(string& s) {
 
 //remove caps and punctuation
 void cleanWord(string& s) {
+	if (s == "") {
+		return;
+	}
 	removePunct(s);
 	removeCaps(s);
 }
@@ -61,6 +66,7 @@ void writeFirstRow(ofstream& output, vector<string>& wordOrder) {
 	for (const string& word : wordOrder) {
 		output << word << ",	";
 	}
+	output << endl;
 
 }
 
@@ -70,9 +76,15 @@ void generateWordOrder (istream& input, vector<string>& wordOrder) {
 	string tempWord;
 	while (input) {
 		input >> tempWord;
+//		cout << "Got tempword: " << tempWord << endl;
+
 
 
 		cleanWord(tempWord);
+		if (tempWord == "") {
+			cout << "Empty string";
+			continue;
+		}
 		//search for tempWord in vector 
 		bool newWord{true};
 		for (int i =0 ; i<wordOrder.size() ; i++ ) {
@@ -86,57 +98,71 @@ void generateWordOrder (istream& input, vector<string>& wordOrder) {
 }
 
 //generates a row of the matrix
-vector<int> generateCounts(ifstream& ist, const vector<string>& wordOrder) {
-	vector<int> row(wordOrder.size(),0);
-	for (const string& word : wordOrder) {
-		// use wordOrder and search for word in text 
-	//	ist.seekg(0,std::ios::beg);
-		string tempWord{"dany"};
+vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, int r) {
+	vector<double> row(wordOrder.size(),0);
+	string temp;
+	cout << "row is of size " << row.size() << endl;
 
-		cout << "Looking for " << word << endl;
 
-		ist.clear();
-		ist.good();
-		while (ist >> tempWord) {
-			cout << "Got " << tempWord << endl;
-			if (tempWord == word) {
-			string nextWord{""};
-			ist >> nextWord;
-			for (int i=0; i<wordOrder.size(); i++ ) {
-				string column = wordOrder[i];
-				if (nextWord == column) {
-					row[i]++;	
-				}
+	ist.clear();
+	ist.seekg(0,std::ios::beg);
+
+//	cout << "Current word is " << wordOrder[r] << endl;
+
+	while (ist>>temp) {
+		cleanWord(temp);
+//		cout << "Current read is " << temp << endl;
+		if (temp != wordOrder[r]) {
+			continue;
+		} else {
+			cout << "Found it ";
+			ist >> temp; // gets next word
+			cleanWord(temp);
+			cout << "Following word is " << temp << endl;
+			int i =0;
+			cout << "i should be zero. i is " << i << endl;
+			for (string nextWord : wordOrder) { // find next word's index
+				if (nextWord == temp) {
+					cout << "Index of next word is " << i << endl;
+					break;
+
+				} else {i++;}
 			}
-
-			}
+			cout << "i is " << i << endl;
+			row[i] = row[i] + 1;	
+			cout << "++'d the entry. Count is now " << row[i] << endl;
 		}
-		ist.good();
-			
-
-
-		
-	
-		// make a new vector of ints that represents the counts of each next word
-		//
-		//look at next word and add one to its entry on the row
-
-
-		// do for all words of wordOrder
+	} 
+	// divide by total count
+	double total;
+	for (double count : row)  {
+		total +=count;
 	}
+	cout << "Total is " << total << endl;
+
+	for (int i =0; i<row.size(); i++ ) {
+		row[i]=row[i]/total;
+	}
+
+
+
 	return row;
 }
+
+
 
 // divide each entry by the sum of the entries
 // output
 
 
-int main () {
+int main() {
 	vector<string> wordOrder;
 
-	ifstream ist{"sample.txt"};
+	ifstream ist{"kafka.txt"};
+	cout << "Got great gatsby" << endl;
 
 	generateWordOrder(ist, wordOrder);
+	cout << "Generated word order" << endl;
 
 	for (int i=0; i<wordOrder.size(); i++) {
 		cout << wordOrder[i] << endl;
@@ -147,10 +173,24 @@ int main () {
 
 	writeFirstRow(ost, wordOrder);
 
-	vector<int> row = generateCounts(ist, wordOrder);
+	vector<double> row = generateCounts(ist, wordOrder, 0);
 
-	for(int i : row ) {
-		cout << i << endl;
+
+	for (int i=0 ; i<row.size(); i++) {
+		cout << row[i] << endl;
+	}
+
+	for (int i=0; i<wordOrder.size(); i++) {
+		ost << wordOrder[i] << ", ";
+		cout << "Generating row" << i << endl;
+		row = generateCounts(ist, wordOrder, i);
+		cout << "Generated row " << i << endl;
+		for (int j=0; j<row.size( ); j++) {
+			ost << row[j] << ", ";
+		}
+		ost << endl;
+
+
 	}
 
 
