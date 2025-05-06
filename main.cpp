@@ -25,8 +25,8 @@ using namespace std;
 
 void removePunct(string& s) {
 	s.erase(remove_if(s.begin(), s.end(), [](char c) {
-		return !isalnum(c);
-	}), s.end());
+				return !isalnum(c);
+				}), s.end());
 }
 
 void removeCaps(string& s) {
@@ -71,12 +71,15 @@ void writeFirstRow(ofstream& output, vector<string>& wordOrder) {
 }
 
 
-//generates columns of matrix. should ignore case and punctuation
+//generates first row of matrix. should ignore case and punctuation
 void generateWordOrder (istream& input, vector<string>& wordOrder) {
+	input.clear();
+	input.seekg(0,std::ios::beg);
+
 	string tempWord;
 	while (input) {
 		input >> tempWord;
-//		cout << "Got tempword: " << tempWord << endl;
+		//		cout << "Got tempword: " << tempWord << endl;
 
 
 
@@ -97,8 +100,46 @@ void generateWordOrder (istream& input, vector<string>& wordOrder) {
 	}
 }
 
+void generateWordOrder2ndDeg(istream& input, vector<string>& wordOrder) {
+	input.clear();
+	input.seekg(0,std::ios::beg);
+
+	string tempWord;
+	string wordOne, wordTwo;
+	input >> wordTwo;
+	cleanWord(wordTwo );
+	while (input) {
+		wordOne = wordTwo;
+		input >> wordTwo;
+		if (!input) break;
+		cleanWord(wordTwo);
+		tempWord = wordOne + " " + wordTwo;
+		//	
+
+
+		if (tempWord == "") {
+			cout << "Empty string";
+			continue;
+		}
+		//search for tempWord in vector 
+		bool newWord{true};
+		string throwaway = tempWord;
+		for (int i =0 ; i<wordOrder.size() ; i++ ) {
+			string oldWord = wordOrder[i];
+			if (isSame(throwaway,oldWord)) {
+				newWord = false;
+				break;
+			} 	
+		}
+		if (newWord == true){ wordOrder.push_back(tempWord);
+			cout << "Got tempword: " << tempWord << endl;;
+		}
+	}
+}
+
+
 //generates a row of the matrix
-vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, int r) {
+vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, string doubleWord) {
 	vector<double> row(wordOrder.size(),0);
 	string temp;
 	cout << "row is of size " << row.size() << endl;
@@ -107,15 +148,20 @@ vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, in
 	ist.clear();
 	ist.seekg(0,std::ios::beg);
 
-//	cout << "Current word is " << wordOrder[r] << endl;
-
-	while (ist>>temp) {
-		cleanWord(temp);
-//		cout << "Current read is " << temp << endl;
-		if (temp != wordOrder[r]) {
+	//	cout << "Current word is " << wordOrder[r] << endl;
+	string wordOne, wordTwo;
+	ist >> wordTwo;
+	cleanWord(wordTwo );
+	while (ist) {
+		wordOne = wordTwo;
+		ist >> wordTwo;
+		cleanWord(wordTwo);
+		temp = wordOne + " " + wordTwo;
+		cout << "Current read is " << temp << endl;
+		if (temp != doubleWord) {
 			continue;
 		} else {
-			cout << "Found it ";
+			cout << "Found it " << endl;
 			ist >> temp; // gets next word
 			cleanWord(temp);
 			cout << "Following word is " << temp << endl;
@@ -134,7 +180,7 @@ vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, in
 		}
 	} 
 	// divide by total count
-	double total;
+	double total{0};
 	for (double count : row)  {
 		total +=count;
 	}
@@ -159,7 +205,7 @@ int main() {
 	vector<string> wordOrder;
 
 	ifstream ist{"kafka.txt"};
-	cout << "Got great gatsby" << endl;
+	cout << "Got text" << endl;
 
 	generateWordOrder(ist, wordOrder);
 	cout << "Generated word order" << endl;
@@ -168,30 +214,36 @@ int main() {
 		cout << wordOrder[i] << endl;
 	}
 
+	//------------------
+
+
+	vector<string> wordOrder2nd;
+
+	generateWordOrder2ndDeg(ist, wordOrder2nd);
+	cout << "Generated 2nd deg word order" << endl;
+
+	for (int i=0; i<wordOrder2nd.size(); i++) {
+		cout << wordOrder2nd[i] << endl;
+	}
+
 
 	ofstream ost{"matrix.csv"};
 
 	writeFirstRow(ost, wordOrder);
 
-	vector<double> row = generateCounts(ist, wordOrder, 0);
+	vector<double> row;
 
-
-	for (int i=0 ; i<row.size(); i++) {
-		cout << row[i] << endl;
-	}
-
-	for (int i=0; i<wordOrder.size(); i++) {
-		ost << wordOrder[i] << ", ";
-		cout << "Generating row" << i << endl;
-		row = generateCounts(ist, wordOrder, i);
+	for (int i=0; i<wordOrder2nd.size(); i++) {
+		ost << wordOrder2nd[i] << ", ";
+		row = generateCounts(ist, wordOrder, wordOrder2nd[i]);
 		cout << "Generated row " << i << endl;
 		for (int j=0; j<row.size( ); j++) {
 			ost << row[j] << ", ";
 		}
 		ost << endl;
 
-
 	}
+
 
 
 
