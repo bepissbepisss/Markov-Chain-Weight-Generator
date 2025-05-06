@@ -137,9 +137,61 @@ void generateWordOrder2ndDeg(istream& input, vector<string>& wordOrder) {
 	}
 }
 
+vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, int r) {
+	vector<double> row(wordOrder.size(),0);
+	string temp;
+	cout << "row is of size " << row.size() << endl;
+
+
+	ist.clear();
+	ist.seekg(0,std::ios::beg);
+
+//	cout << "Current word is " << wordOrder[r] << endl;
+
+	while (ist>>temp) {
+		cleanWord(temp);
+//		cout << "Current read is " << temp << endl;
+		if (temp != wordOrder[r]) {
+			continue;
+		} else {
+			cout << "Found it ";
+			ist >> temp; // gets next word
+			cleanWord(temp);
+			cout << "Following word is " << temp << endl;
+			int i =0;
+			cout << "i should be zero. i is " << i << endl;
+			for (string nextWord : wordOrder) { // find next word's index
+				if (nextWord == temp) {
+					cout << "Index of next word is " << i << endl;
+					break;
+
+				} else {i++;}
+			}
+			cout << "i is " << i << endl;
+			row[i] = row[i] + 1;	
+			cout << "++'d the entry. Count is now " << row[i] << endl;
+		}
+	} 
+	// divide by total count
+	double total;
+	for (double count : row)  {
+		total +=count;
+	}
+	cout << "Total is " << total << endl;
+
+	if (total != 0 ) {
+		for (int i =0; i<row.size(); i++ ) {
+			row[i]=row[i]/total;
+		}
+	}
+
+
+
+	return row;
+}
 
 //generates a row of the matrix
-vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, string doubleWord) {
+vector<double> generateCounts2ndDeg(ifstream& ist, const vector<string>& wordOrder, string doubleWord) {
 	vector<double> row(wordOrder.size(),0);
 	string temp;
 	cout << "row is of size " << row.size() << endl;
@@ -186,10 +238,7 @@ vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, st
 	}
 	cout << "Total is " << total << endl;
 
-	for (int i =0; i<row.size(); i++ ) {
-		row[i]=row[i]/total;
-	}
-
+	
 
 
 	return row;
@@ -235,7 +284,7 @@ int main() {
 
 	for (int i=0; i<wordOrder2nd.size(); i++) {
 		ost << wordOrder2nd[i] << ", ";
-		row = generateCounts(ist, wordOrder, wordOrder2nd[i]);
+		row = generateCounts2ndDeg(ist, wordOrder, wordOrder2nd[i]);
 		cout << "Generated row " << i << endl;
 		for (int j=0; j<row.size( ); j++) {
 			ost << row[j] << ", ";
@@ -243,6 +292,18 @@ int main() {
 		ost << endl;
 
 	}
+
+	for (int i=0; i<wordOrder.size(); i++) {
+		ost << wordOrder[i] << ", ";
+		row = generateCounts(ist, wordOrder,i);
+		cout << "Generated row " << i << endl;
+		for (int j=0; j<row.size( ); j++) {
+			ost << row[j] << ", ";
+		}
+		ost << endl;
+
+	}
+
 
 
 
