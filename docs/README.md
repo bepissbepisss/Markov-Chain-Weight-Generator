@@ -1,4 +1,4 @@
-Stats Project Part I: Markov Chain Weight Generator
+Markov Chain Text Prediction
 ============================
 
 This project creates a csv file that represents the probabilites of the next word of a sequence a *Markov Chain*.
