@@ -135,4 +135,10 @@ td.gather {text-align:center; }
 table.gather {width:100%;}
 div.gather-star {text-align:center;}
 /* end css.sty */
+body {
+    margin-left: 100px;  /* Adjust the value as needed */
+    margin-right: 100px; /* Adjust the value as needed */
+    margin-top: 0;      /* No top margin */
+    margin-bottom: 0;   /* No bottom margin */
+}
 
