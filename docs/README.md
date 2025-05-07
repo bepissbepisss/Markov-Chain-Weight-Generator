@@ -1,4 +1,4 @@
-Markov Chain Weight Generator
+Markov Chain Text Generation
 ============================
 
 
