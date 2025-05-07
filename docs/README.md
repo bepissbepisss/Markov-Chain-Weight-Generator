@@ -15,5 +15,8 @@ For a given word, go through the whole text and count the number of times each d
 
 Do this for all words of the matrix.
 
+Abstract
+-------
+
 
 
