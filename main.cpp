@@ -173,7 +173,7 @@ vector<double> generateCounts(ifstream& ist, const vector<string>& wordOrder, in
 		}
 	} 
 	// divide by total count
-	double total;
+	double total{0};
 	for (double count : row)  {
 		total +=count;
 	}
@@ -238,8 +238,11 @@ vector<double> generateCounts2ndDeg(ifstream& ist, const vector<string>& wordOrd
 	}
 	cout << "Total is " << total << endl;
 
-	
-
+	if (total != 0 ) {
+		for (int i =0; i<row.size(); i++ ) {
+			row[i]=row[i]/total;
+		}
+	}
 
 	return row;
 }
