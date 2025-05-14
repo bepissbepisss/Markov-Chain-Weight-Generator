@@ -1,6 +1,6 @@
 Markov Chain Text Generation
 ============================
-[Text Generator](https://github.com/bepissbepisss/Markov-Chain-Text-Generator)
+[Text Generator](https://github.com/bepissbepisss/Markov-Chain-Text-Generator) | 
 [Weight Generator](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator)
 
 Introduction
