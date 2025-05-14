@@ -1,6 +1,7 @@
 Markov Chain Text Generation
 ============================
-
+[Text Generator](https://github.com/bepissbepisss/Markov-Chain-Text-Generator)
+[Weight Generator](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator)
 
 Introduction
 ------
@@ -144,7 +145,8 @@ Conclusion
 
 
 
-
+References 
+----
 Stanley F. Chen and Joshua Goodman. 1996. An Empirical Study of Smoothing Techniques for Language Modeling. In 34th Annual Meeting of the Association for Computational Linguistics, pages 310–318, Santa Cruz, California, USA. Association for Computational Linguistics.
 https://medium.com/@kpradyumna/understanding-and-implementing-transformer-based-language-models-and-their-variants-cb02f4cbbf17
 
