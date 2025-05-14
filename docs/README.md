@@ -1,4 +1,4 @@
-Markov Chain Text Generation
+Modern Text Prediction with Century Old Techniques
 ============================
 [Text Generator](https://github.com/bepissbepisss/Markov-Chain-Text-Generator) | 
 [Weight Generator](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator)
