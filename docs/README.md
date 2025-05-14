@@ -20,6 +20,8 @@ A Markov Chain is a grouping of states with different transitions between each s
 An example;
 Imagine Dany is deciding which candy he wants to eat from his backpack. In his bag Dany has Jolly Ranchers (J), Candy Corn (C) and a Sour Keys(S). After quizzing Dany we find out that after having a Jolly Rancher there is a 20% Dany has another Jolly Rancher, a 70% he has a Candy Corn and a 10% he has a sour key. After more quizzing we are able to make a chart.
 
+![image](https://github.com/user-attachments/assets/fe387164-b452-4aff-b038-cd7a31aa16f5)
+
  From this chart it is clear to see what the chances are that Dany chooses any given candy depending on what candy he has just had, this brings us to our fist important quality of the Markov Chain.
 
 For the Markov Chain to function there is a key assumption and that is that the Markov Chain is a memoryless function. Similar to the Geometric and Exponential distributions, the memoryless property of the Markov Chain implies that the probability of any given future state depends solely on the present state and not the states before it. 
