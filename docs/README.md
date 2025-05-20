@@ -1,6 +1,7 @@
 Modern Text Prediction with Century Old Techniques
 Introduction 
 ===
+[Text Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Text-Generator) [Weight Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator/)
 
 As the title suggests the goal of this experiment was to recreate text predictions similar to the suggested words one might see when typing on an iPhone keyboard by implementing Markov Chains. The Markov Chains were implemented using the C++ programming language with the short story _The Metamorphosis_ by Franz Kafka as a corpus. The decision to use second order Markov Chains to reduce the computational power needed to run the experiment limits it to a purely academic exercise. In this document the theory of Markov Chains and their assumptions will be discussed, then the data methodology used when conducting the experiment will be examined, later the results and expected results will be discussed and compared to modern text prediction algorithms specifically Bengio’s algorithm and finally a conclusion on the significance of the experiment will be produced.
 
