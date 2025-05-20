@@ -279,7 +279,7 @@ int main() {
 	}
 
 
-	ofstream ost{"matrix.csv"};
+	ofstream ost{"weights.csv"};
 
 	writeFirstRow(ost, wordOrder);
 
