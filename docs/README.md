@@ -31,7 +31,7 @@ This is the case for a first order Markov chain where only the most recent event
 This example paired with an understanding of basic probabilities allow the following formula to be formulated.
 
 
-“The Markov Property
+The Markov Property:
 For any positive integer n and possible states i0,i1,...,in of the random variables,
 ```
 P(X_n = i_n \mid X_{n-1} = i_{n-1}) = P(X_n = i_n \mid X_0 = i_0, X_1 = i_1, \ldots, X_{n-1} = i_{n-1}).
