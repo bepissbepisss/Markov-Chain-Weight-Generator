@@ -31,15 +31,16 @@ This example paired with an understanding of basic probabilities allow the follo
 
 “The Markov Property
 For any positive integer n and possible states i0,i1,...,in of the random variables,
-```math
+$
 P(X_n = i_n \mid X_{n-1} = i_{n-1}) = P(X_n = i_n \mid X_0 = i_0, X_1 = i_1, \ldots, X_{n-1} = i_{n-1}).
-```
+$
 (1)
  
 
 This reconfirms what was previously stated in saying that the next state Xn only depends on the previous state Xn-1 and not every preceding state. The memoryless property is incredibly significant for simplifying calculations and when gathering data. Needing only to get the information of the current state is much more efficient than gathering data of all previous states.
 
 The other significant property of the Markov Chain is the ability to form a transition matrix. A transition matrix is a matrix composed of probabilities of changing from one state to another. Using the matrix allows for computational speeds to be increased. To form the matrix, simply take the outgoing probabilities for each state and fill them into individual rows.
+
 |       | J        | S        | C        |
 |-------|----------|----------|----------|
 | **J** | P(J→J)   | P(J→S)   | P(J→C)   |
@@ -59,6 +60,7 @@ The other significant property of the Markov Chain is the ability to form a tran
 Using the properties of matrices and transitions matrices we can find what is called the two step matrix or P2. This matrix simply represents the probabilities of where we would end up after two choices. To find this matrix simply multiply the transition matrix by itself.
 
 P x P= 
+
 |       | J      | S      | C      |
 |-------|--------|--------|--------|
 | **J** | 0.185  | 0.175  | 0.640  |
