@@ -1,6 +1,6 @@
 Modern Text Prediction with Century Old Techniques
 ===
-[Text Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Text-Generator) [Weight Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator/)
+[Text Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Text-Generator) | [Weight Generator Repository](https://github.com/bepissbepisss/Markov-Chain-Weight-Generator/) | [Link to weight matrix](https://drive.google.com/file/d/1NkjLXaEUsguQhvQRcQV0D6wWnOw5xfZE/view?usp=drive_link)
 
 Introduction 
 ===
