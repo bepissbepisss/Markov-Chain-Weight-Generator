@@ -3,6 +3,7 @@ Introduction
 ===
 
 As the title suggests the goal of this experiment was to recreate text predictions similar to the suggested words one might see when typing on an iPhone keyboard by implementing Markov Chains. The Markov Chains were implemented using the C++ programming language with the short story _The Metamorphosis_ by Franz Kafka as a corpus. The decision to use second order Markov Chains to reduce the computational power needed to run the experiment limits it to a purely academic exercise. In this document the theory of Markov Chains and their assumptions will be discussed, then the data methodology used when conducting the experiment will be examined, later the results and expected results will be discussed and compared to modern text prediction algorithms specifically Bengio’s algorithm and finally a conclusion on the significance of the experiment will be produced.
+
 Theory
 ===
 
@@ -130,8 +131,8 @@ A study in the 90s by Stanley F. Chen and Joshua Goodman found that after 5 N-gr
 
 To improve the poor results, smoothing can be implemented. Smoothing is a method to help reduce the loss of information with unlikely events. In the corpus it is entirely likely that certain combinations of words will never show up. When there are chains missing, the code assigns a probability of zero to that n-gram. With a probability of zero, the multiplication to create a higher order matrix removes information. The aim of smoothing is to bring small amounts of probability to the unlikely events. In our code smoothing is implemented as explained in the Data Methodology section. More advanced techniques could lead to an improvement in performance without a significant increase in computational demands. 
 
-A comparison:
-=====
+#### A comparison:
+
 Despite shortcomings in Markov text generation, other models are able to accurately generate coherent text.
 
 A different method to text generation is the Neural Probabilistic Language Model, specifically Bengio’s model. Simply put, this mode generalizes the inefficient n-gram model that the Markov chain prediction relies on by mapping similar words in the corpus to similar vectors so the model can eliminate large sections of the data that take long to calculate with the n-gram Markov model and thus this model functions as a successful text generator. (3) Whereas in most n-gram models, the smallest atomic unit is a single word and there is no notion of similarity between words, the vector word model considers words as vectors that can be similar in meaning and in structure to other words. These vector’s dimensions store data about meaning and use. For example the vector representing the word King stores its meaning in such a way that if you were to subtract the vector for the word Man and add the vector for Woman the closest resultant vector would be for the word Queen (4). In this way, the model stores the meaning behind each word and its connection to every other word. Not only do these models store meaning but they also store syntaxical data. For example the vector for apple minus the vector for apples will give a similar vector to the vector for car minus the vector for cars meaning the information about singularity and plurality is also stored in these vectors.
