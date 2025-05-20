@@ -34,7 +34,7 @@ This example paired with an understanding of basic probabilities allow the follo
 The Markov Property:
 For any positive integer n and possible states i0,i1,...,in of the random variables,
 ```
-P(X_n = i_n \mid X_{n-1} = i_{n-1}) = P(X_n = i_n \mid X_0 = i_0, X_1 = i_1, \ldots, X_{n-1} = i_{n-1}).
+P(X_n = i_n | X_{n-1} = i_{n-1}) = P(X_n = i_n | X_0 = i_0, X_1 = i_1, ... X_{n-1} = i_{n-1}).
 ```
 (1)
  
